@@ -1,0 +1,19 @@
+identifier: weact_stm32h723_core
+name: WeAct Studio STM32H723 Core Board
+type: mcu
+arch: arm
+toolchain:
+  - zephyr
+  - gnuarmemb
+ram: 320
+flash: 1024
+supported:
+  - gpio
+  - counter
+  - spi
+  - backup_sram
+  - watchdog
+  - usb_device
+  - usbd
+  - video
+vendor: weact

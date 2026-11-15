@@ -1,0 +1,13 @@
+/*
+ * SPDX-FileCopyrightText: Copyright The Zephyr Project Contributors
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&st7735r_160x80 {
+	/*
+	 * 180° rotation, RGB order (no BGR bit). Combined with rgb-is-inverted
+	 * this reports PIXEL_FORMAT_RGB_565X, matching OV2640 DCMI byte order
+	 * (high byte first) for the ST7735 SPI panel.
+	 */
+	madctl = <176>; /* 0xb0 */
+};

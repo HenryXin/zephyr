@@ -37,6 +37,16 @@ For :zephyr:board:`mini_stm32h743`, build this sample application with the follo
    :gen-args: -DCONFIG_BOOT_DELAY=2000
    :compact:
 
+For :zephyr:board:`weact_stm32h723_core`, build with:
+
+.. zephyr-app-commands::
+   :zephyr-app: samples/subsys/video/capture_to_lvgl/
+   :board: weact_stm32h723_core
+   :shield: weact_ov2640_cam_module
+   :goals: build flash
+   :gen-args: -DCONFIG_BOOT_DELAY=2000
+   :compact:
+
 For testing purpose and without the need of any real video capture hardware,
 a video software pattern generator is supported by using :ref:`snippet-video-sw-generator`:
 

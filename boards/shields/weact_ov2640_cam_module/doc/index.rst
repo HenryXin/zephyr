@@ -75,6 +75,13 @@ Set ``--shield weact_ov2640_cam_module`` when you invoke ``west build``. For exa
    :gen-args: -DCONFIG_BOOT_DELAY=2000
    :goals: build
 
+.. zephyr-app-commands::
+   :zephyr-app: samples/subsys/video/capture_to_lvgl/
+   :board: weact_stm32h723_core
+   :shield: weact_ov2640_cam_module
+   :gen-args: -DCONFIG_BOOT_DELAY=2000
+   :goals: build
+
 .. _MiniSTM32H7xx GitHub:
    https://github.com/WeActStudio/MiniSTM32H7xx
 

@@ -166,11 +166,17 @@ int main(void)
 		return 0;
 	}
 
+	/*
+	 * Use the display's runtime color format, not LV_COLOR_FORMAT_NATIVE.
+	 * NATIVE is a compile-time default (often RGB565) and will not match a
+	 * byte-swapped RGB565 panel; OV2640 DCMI frames are high-byte-first and
+	 * must be tagged as the same format the display flush expects.
+	 */
 	lv_img_dsc_t video_img = {
 		.header.w = CONFIG_VIDEO_WIDTH,
 		.header.h = CONFIG_VIDEO_HEIGHT,
 		.data_size = CONFIG_VIDEO_WIDTH * CONFIG_VIDEO_HEIGHT * sizeof(lv_color_t),
-		.header.cf = LV_COLOR_FORMAT_NATIVE,
+		.header.cf = lv_display_get_color_format(lv_display_get_default()),
 	};
 
 	lv_obj_t *screen = lv_img_create(lv_scr_act());

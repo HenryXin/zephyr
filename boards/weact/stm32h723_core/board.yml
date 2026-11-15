@@ -1,0 +1,6 @@
+board:
+  name: weact_stm32h723_core
+  full_name: STM32H723 Core Board
+  vendor: weact
+  socs:
+    - name: stm32h723xx

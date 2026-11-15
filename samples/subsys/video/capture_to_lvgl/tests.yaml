@@ -18,6 +18,8 @@ tests:
         - "Capture started"
     platform_allow:
       - mini_stm32h743
+      - weact_stm32h723_core
     depends_on: video
     integration_platforms:
       - mini_stm32h743
+      - weact_stm32h723_core
