@@ -6,8 +6,12 @@ if SOC_SUN8I_H3
 config NUM_IRQS
 	default 156
 
+config SOC_RESET_HOOK
+	default y
+
+# ARM generic timer (CNTPCT) runs from the 24 MHz OSC, not the CPU PLL.
 config SYS_CLOCK_HW_CYCLES_PER_SEC
-	default $(dt_node_int_prop_int,/cpus/cpu@0,clock-frequency)
+	default 24000000
 
 configdefault UART_NS16550_ACCESS_WORD_ONLY
 	default y

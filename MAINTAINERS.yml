@@ -425,6 +425,7 @@ Allwinner Platforms:
   maintainers:
     - khaidox
   files:
+    - boards/friendlyarm/nanopi_neo/
     - boards/xunlong/opi_zero2w/
     - dts/arm/allwinner/
     - dts/arm64/allwinner/

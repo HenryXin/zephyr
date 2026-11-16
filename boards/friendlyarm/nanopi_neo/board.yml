@@ -1,0 +1,6 @@
+board:
+  name: nanopi_neo
+  full_name: NanoPi NEO
+  vendor: friendlyarm
+  socs:
+  - name: sun8i_h3
