@@ -8,12 +8,12 @@ toolchain:
 ram: 192
 flash: 2048
 supported:
+  - bluetooth
   - counter
   - gpio
-  - watchdog
-  - bluetooth
-  - spi
   - i2c
-  - usbd
   - nvs
+  - spi
+  - usbd
+  - watchdog
 vendor: st

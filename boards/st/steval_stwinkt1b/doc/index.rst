@@ -52,12 +52,43 @@ Connectivity
 
    - **BlueNRG-M2SA** Bluetooth® low energy v5.0 wireless technology module
      (`BlueNRG-M2 datasheet`_)
+   - **STEVAL-STWINWFV1** optional Wi-Fi expansion (ISM43362-M3G-L44-E on CN3)
+     (`STEVAL-STWINWFV1`_)
    - USB micro-B connector (power supply and data)
    - STDC14 programming connector for **STLINK-V3MINI**
      (`stlink-v3mini`_)
    - microSD card socket
    - STMod+ connector
    - RS485 interface
+
+Wi-Fi expansion (STEVAL-STWINWFV1)
+----------------------------------
+
+Wi-Fi is not populated on the STWIN core board. Plug the STEVAL-STWINWFV1
+adapter into CN3 (default solder bridges route SPI1 to the connector) and build
+the board-specific sample (:zephyr:code-sample:`stwinkt1b_wifi`).
+
+SPI1 mapping used by the board DTS:
+
++----------+------------------+
+| Signal   | STM32 pin        |
++==========+==================+
+| SCK      | PG2              |
++----------+------------------+
+| MISO     | PG3              |
++----------+------------------+
+| MOSI     | PG4              |
++----------+------------------+
+| CS       | PF3              |
++----------+------------------+
+| DATA_RDY | PE11             |
++----------+------------------+
+| WAKEUP   | PD7              |
++----------+------------------+
+| RESET    | PC6              |
++----------+------------------+
+| BOOT0    | PF12             |
++----------+------------------+
 
 Sensing
 *******
@@ -223,8 +254,15 @@ You can build and flash the provided sample application
 (:zephyr:code-sample:`stwinkt1b_sensors`) that reads sensors data and outputs
 values on the console.
 
+With a STEVAL-STWINWFV1 plugged into CN3, use
+(:zephyr:code-sample:`stwinkt1b_wifi`) to exercise the ISM43362 Wi-Fi module
+through the Wi-Fi shell.
+
 .. _STEVAL-STWINKT1B Development kit website:
    https://www.st.com/en/evaluation-tools/steval-stwinkt1b.html
+
+.. _STEVAL-STWINWFV1:
+   https://www.st.com/en/evaluation-tools/steval-stwinwfv1.html
 
 .. _STEVAL-STWINKT1B board User Manual:
    https://www.st.com/resource/en/user_manual/um2777-how-to-use-the-stevalstwinkt1b-sensortile-wireless-industrial-node-for-condition-monitoring-and-predictive-maintenance-applications-stmicroelectronics.pdf

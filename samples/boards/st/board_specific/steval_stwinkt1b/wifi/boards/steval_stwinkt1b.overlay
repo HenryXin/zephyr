@@ -1,0 +1,15 @@
+/*
+ * Copyright The Zephyr Project Contributors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/* Enable SPI1 and the STEVAL-STWINWFV1 ISM43362 module on CN3. */
+
+&spi1 {
+	status = "okay";
+};
+
+&wifi0 {
+	status = "okay";
+};

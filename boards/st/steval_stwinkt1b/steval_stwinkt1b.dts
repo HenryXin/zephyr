@@ -47,6 +47,7 @@
 
 	aliases {
 		accel0 = &iis2dh;
+		eswifi0 = &wifi0;
 		led0 = &green_led;
 		led1 = &orange_led;
 		sw0 = &user_button;
@@ -106,6 +107,30 @@
 	pinctrl-names = "default";
 	current-speed = <115200>;
 	status = "okay";
+};
+
+/*
+ * SPI1 hosts the optional STEVAL-STWINWFV1 Wi-Fi expansion (ISM43362) on CN3.
+ * Pinout matches ST's STWIN BSP (STWIN_wifi.h): SCK/MISO/MOSI on PG2/PG3/PG4,
+ * CS on PF3 (not PB13 — that CN3 net is the USART3_CTS alternate).
+ * Leave disabled unless the expansion is present.
+ */
+&spi1 {
+	pinctrl-0 = <&spi1_sck_pg2 &spi1_miso_pg3 &spi1_mosi_pg4>;
+	pinctrl-names = "default";
+	cs-gpios = <&gpiof 3 GPIO_ACTIVE_LOW>;
+	status = "disabled";
+
+	wifi0: ism43362@0 {
+		compatible = "inventek,eswifi";
+		reg = <0>;
+		spi-max-frequency = <DT_FREQ_M(2)>;
+		resetn-gpios = <&gpioc 6 GPIO_ACTIVE_HIGH>;
+		boot0-gpios = <&gpiof 12 GPIO_ACTIVE_HIGH>;
+		wakeup-gpios = <&gpiod 7 GPIO_ACTIVE_HIGH>;
+		data-gpios = <&gpioe 11 GPIO_ACTIVE_HIGH>;
+		status = "disabled";
+	};
 };
 
 &spi2 {

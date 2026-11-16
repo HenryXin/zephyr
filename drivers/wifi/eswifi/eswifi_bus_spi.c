@@ -170,10 +170,21 @@ data:
 		k_yield();
 	}
 
-	/* Flush remaining data if receiving buffer not large enough */
-	while (eswifi_spi_cmddata_ready(spi)) {
-		eswifi_spi_read(eswifi, tmp, 2);
-		k_sleep(K_MSEC(1));
+	/* Flush remaining data if receiving buffer not large enough.
+	 * Bound the loop so a stuck-high DATA_READY line cannot hang boot.
+	 */
+	{
+		unsigned int flush_retries = 60 * 1000; /* match cmddata wait */
+
+		while (eswifi_spi_cmddata_ready(spi) && flush_retries--) {
+			eswifi_spi_read(eswifi, tmp, 2);
+			k_sleep(K_MSEC(1));
+		}
+		if (eswifi_spi_cmddata_ready(spi)) {
+			LOG_ERR("DATA_READY stuck high while flushing");
+			spi_release_dt(&spi->cfg->bus);
+			return -ETIMEDOUT;
+		}
 	}
 
 	/* Our device is flagged with SPI_HOLD_ON_CS|SPI_LOCK_ON, release */

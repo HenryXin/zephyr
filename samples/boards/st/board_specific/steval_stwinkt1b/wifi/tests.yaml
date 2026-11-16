@@ -1,0 +1,15 @@
+sample:
+  description: STWIN STEVAL-STWINWFV1 Wi-Fi (ISM43362) shell
+  name: STWIN Wi-Fi
+tests:
+  sample.boards.steval_stwinkt1b.wifi:
+    harness: net
+    platform_allow: steval_stwinkt1b
+    tags:
+      - net
+      - wifi
+    depends_on:
+      - spi
+      - gpio
+    integration_platforms:
+      - steval_stwinkt1b
