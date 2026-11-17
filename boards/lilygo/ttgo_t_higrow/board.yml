@@ -1,0 +1,6 @@
+board:
+  name: ttgo_t_higrow
+  full_name: TTGO T-Higrow (DHT11)
+  vendor: lilygo
+  socs:
+  - name: esp32

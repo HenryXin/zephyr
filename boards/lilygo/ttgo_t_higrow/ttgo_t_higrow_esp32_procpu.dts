@@ -1,0 +1,143 @@
+/*
+ * Copyright The Zephyr Project Contributors
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+/dts-v1/;
+
+#include <espressif/esp32/esp32.dtsi>
+#include <espressif/partitions_0x1000_amp.dtsi>
+#include "ttgo_t_higrow-pinctrl.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+	compatible = "lilygo,ttgo-t-higrow";
+	model = "TTGO T-Higrow DHT11 PROCPU";
+
+	aliases {
+		uart-0 = &uart0;
+		i2c-0 = &i2c0;
+		sw0 = &user_button;
+		watchdog0 = &wdt0;
+		dht0 = &dht11;
+	};
+
+	chosen {
+		zephyr,sram = &sram1;
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+
+		boot_button: button_boot {
+			gpios = <&gpio0 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "BOOT";
+			zephyr,code = <INPUT_KEY_0>;
+		};
+
+		/* USER / Wake button on GPIO35 (input-only) */
+		user_button: button_user {
+			gpios = <&gpio1 3 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "USER";
+			zephyr,code = <INPUT_KEY_1>;
+		};
+	};
+
+	/*
+	 * POWER_CTRL (GPIO4) gates sensor rail power (DHT11, BH1750, soil front-end).
+	 * LilyGO firmware drives this high before reading sensors.
+	 */
+	sensor_pwr: regulator-sensor-pwr {
+		compatible = "regulator-fixed";
+		regulator-name = "sensor-pwr";
+		enable-gpios = <&gpio0 4 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
+	};
+
+	/*
+	 * ADC1 channels (Zephyr adc0 / unit 1):
+	 *   CH4 GPIO32 soil moisture, CH5 GPIO33 battery, CH6 GPIO34 salt/fertility
+	 */
+	zephyr,user {
+		io-channels = <&adc0 4>, <&adc0 5>, <&adc0 6>;
+		io-channel-names = "soil", "battery", "salt";
+	};
+
+	dht11: dht11 {
+		compatible = "aosong,dht";
+		dio-gpios = <&gpio0 16 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+		status = "okay";
+	};
+};
+
+/* Product / Arduino: 4MB flash (schematic also lists W25Q64 — confirm on HW) */
+&flash0 {
+	reg = <0x0 DT_SIZE_M(4)>;
+	ranges = <0x0 0x0 DT_SIZE_M(4)>;
+};
+
+&uart0 {
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-names = "default";
+	status = "okay";
+};
+
+/*
+ * Flash SPI uses GPIO6-11. Do not reserve GPIO16/17: DHT11 uses GPIO16.
+ */
+&gpio0 {
+	gpio-reserved-ranges = <6 6>, <20 1>, <24 1>, <28 4>;
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+&i2c0 {
+	clock-frequency = <I2C_BITRATE_STANDARD>;
+	sda-gpios = <&gpio0 25 GPIO_OPEN_DRAIN>;
+	scl-gpios = <&gpio0 26 GPIO_OPEN_DRAIN>;
+	pinctrl-0 = <&i2c0_default>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	bh1750: bh1750@23 {
+		compatible = "rohm,bh1750";
+		reg = <0x23>;
+		status = "okay";
+	};
+};
+
+&adc0 {
+	status = "okay";
+};
+
+&timer0 {
+	status = "okay";
+};
+
+&timer1 {
+	status = "okay";
+};
+
+&timer2 {
+	status = "okay";
+};
+
+&timer3 {
+	status = "okay";
+};
+
+&trng0 {
+	status = "okay";
+};
+
+&wifi {
+	status = "okay";
+};

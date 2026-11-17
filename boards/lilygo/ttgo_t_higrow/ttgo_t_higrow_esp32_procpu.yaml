@@ -1,0 +1,16 @@
+identifier: ttgo_t_higrow/esp32/procpu
+name: TTGO T-Higrow DHT11 PROCPU
+type: mcu
+arch: xtensa
+toolchain:
+  - zephyr
+supported:
+  - adc
+  - gpio
+  - i2c
+  - watchdog
+  - uart
+  - pinmux
+  - nvs
+  - wifi
+vendor: lilygo
