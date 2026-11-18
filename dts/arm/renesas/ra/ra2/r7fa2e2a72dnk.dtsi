@@ -1,0 +1,51 @@
+/*
+ * Copyright (c) 2026 Renesas Electronics Corporation
+ *
+ * Renesas R7FA2E2A72DNK MCU device tree (64 KB code flash, 24-pin HWQFN)
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <renesas/ra/ra2/ra2e2.dtsi>
+
+/ {
+	soc {
+		code_flash_ctrl: code-flash-ctrl {
+			compatible = "renesas,ra-flash-lp-controller";
+			ranges;
+			command-interface = <&fcb>;
+			programming-enable;
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			code_flash: code-flash@0 {
+				compatible = "soc-nv-flash";
+				reg = <0x0 DT_SIZE_K(64)>;
+				ranges = <0x0 0x0 DT_SIZE_K(64)>;
+				write-block-size = <4>;
+				erase-block-size = <2048>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+			};
+		};
+
+		data_flash_ctrl: data-flash-ctrl {
+			compatible = "renesas,ra-flash-lp-controller";
+			ranges;
+			command-interface = <&fcb>;
+			programming-enable;
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			data_flash: data-flash@40100000 {
+				compatible = "soc-nv-flash";
+				reg = <0x40100000 DT_SIZE_K(2)>;
+				ranges = <0x0 0x40100000 DT_SIZE_K(2)>;
+				write-block-size = <1>;
+				erase-block-size = <1024>;
+				#address-cells = <1>;
+				#size-cells = <1>;
+			};
+		};
+	};
+};

@@ -1,0 +1,127 @@
+/*
+ * Copyright (c) 2026 Renesas Electronics Corporation
+ *
+ * DTS for Renesas FPB-RA2E2 Fast Prototyping Board
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+
+#include <renesas/ra/ra2/r7fa2e2a72dnk.dtsi>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include "fpb_ra2e2-pinctrl.dtsi"
+
+/ {
+	compatible = "renesas,r7fa2e2a72dnk", "renesas,ra2e2";
+	model = "Renesas FPB-RA2E2";
+
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,flash-controller = &code_flash_ctrl;
+		zephyr,flash = &code_flash;
+		zephyr,console = &uart9;
+		zephyr,shell-uart = &uart9;
+		zephyr,crc = &crc;
+	};
+
+	/* UM Table 11: LED1 P015, LED2 P914 */
+	leds {
+		compatible = "gpio-leds";
+
+		led1: led1 {
+			gpios = <&ioport0 15 GPIO_ACTIVE_HIGH>;
+			label = "LED1";
+		};
+
+		led2: led2 {
+			gpios = <&ioport9 14 GPIO_ACTIVE_HIGH>;
+			label = "LED2";
+		};
+	};
+
+	/* UM Table 12: S1 P205 */
+	buttons {
+		compatible = "gpio-keys";
+
+		button0: s1 {
+			gpios = <&ioport2 5 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 1";
+			zephyr,code = <INPUT_KEY_0>;
+		};
+	};
+
+	aliases {
+		led0 = &led1;
+		led1 = &led2;
+		sw0 = &button0;
+		watchdog0 = &wdt;
+	};
+};
+
+/* Schematic: 24.000 MHz XTAL, 32.768 kHz sub-clock */
+&xtal {
+	clock-frequency = <DT_FREQ_M(24)>;
+	mosel = <0>;
+	#clock-cells = <0>;
+	status = "okay";
+};
+
+&subclk {
+	status = "okay";
+};
+
+&sci9 {
+	pinctrl-0 = <&sci9_default>;
+	pinctrl-names = "default";
+	status = "okay";
+
+	uart9: uart {
+		current-speed = <115200>;
+		status = "okay";
+	};
+};
+
+&ioport0 {
+	status = "okay";
+};
+
+&ioport1 {
+	status = "okay";
+};
+
+&ioport2 {
+	status = "okay";
+};
+
+&ioport9 {
+	status = "okay";
+};
+
+&wdt {
+	status = "okay";
+};
+
+&crc {
+	status = "okay";
+};
+
+&port_irq1 {
+	interrupts = <4 1>;
+	status = "okay";
+};
+
+&data_flash {
+	partitions {
+		ranges;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
+		storage_partition: partition@0 {
+			compatible = "zephyr,mapped-partition";
+			reg = <0x0 DT_SIZE_K(2)>;
+			label = "storage";
+		};
+	};
+};

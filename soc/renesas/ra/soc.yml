@@ -29,6 +29,9 @@ family:
           - name: r7fa2l1abxxfm
           - name: r7fa2l1abxxfl
           - name: r7fa2l1abxxne
+      - name: ra2e2
+        socs:
+          - name: r7fa2e2a72dnk
       - name: ra4e1
         socs:
           - name: r7fa4e10d2cfm

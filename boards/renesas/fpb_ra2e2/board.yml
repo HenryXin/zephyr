@@ -1,0 +1,6 @@
+board:
+  name: fpb_ra2e2
+  full_name: RA2E2 Fast Prototyping Board
+  vendor: renesas
+  socs:
+  - name: r7fa2e2a72dnk
