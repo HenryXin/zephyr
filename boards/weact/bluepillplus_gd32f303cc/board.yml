@@ -1,0 +1,6 @@
+board:
+  name: bluepillplus_gd32f303cc
+  full_name: BluePill Plus GD32F303CCT6
+  vendor: weact
+  socs:
+    - name: gd32f403

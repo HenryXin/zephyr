@@ -1,0 +1,17 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+identifier: bluepillplus_gd32f303cc
+name: WeActStudio BluePill Plus GD32F303CCT6
+type: mcu
+arch: arm
+ram: 48
+flash: 256
+toolchain:
+  - zephyr
+  - gnuarmemb
+supported:
+  - gpio
+  - uart
+  - watchdog
+vendor: weact

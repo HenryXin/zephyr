@@ -61,7 +61,15 @@ zephyr_include_directories(${gd32_std_dir}/include)
 zephyr_include_directories(${ZEPHYR_HAL_GIGADEVICE_MODULE_DIR}/include)
 zephyr_include_directories(${ZEPHYR_HAL_GIGADEVICE_MODULE_DIR}/common_include)
 
-zephyr_library_sources(${gd32_soc_sys_dir}/source/system_${CONFIG_SOC_SERIES}.c)
+# BluePill Plus GD32F303CCT6 uses gd32f403 as a stand-in SoC; replace the F403
+# SystemInit (PLL1/CL) with board HXTAL-only bring-up until a real F30x port exists.
+if(CONFIG_BOARD_BLUEPILLPLUS_GD32F303CC)
+  zephyr_library_sources(
+    ${BOARD_DIR}/support/system_gd32f303cc.c
+  )
+else()
+  zephyr_library_sources(${gd32_soc_sys_dir}/source/system_${CONFIG_SOC_SERIES}.c)
+endif()
 
 zephyr_library_sources_ifdef(CONFIG_USE_GD32_ADC      ${gd32_std_src_dir}/${CONFIG_SOC_SERIES}_adc.c)
 zephyr_library_sources_ifdef(CONFIG_USE_GD32_BKP      ${gd32_std_src_dir}/${CONFIG_SOC_SERIES}_bkp.c)

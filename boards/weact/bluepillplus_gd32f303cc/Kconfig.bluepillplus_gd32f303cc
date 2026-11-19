@@ -1,0 +1,5 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_BLUEPILLPLUS_GD32F303CC
+	select SOC_GD32F403

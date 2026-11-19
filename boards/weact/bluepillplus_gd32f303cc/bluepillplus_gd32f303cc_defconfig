@@ -1,0 +1,16 @@
+# Copyright The Zephyr Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+# 48 KiB SRAM is not power-of-two; ARMv7-M MPU region sizing faults
+# under CONFIG_MPU_STACK_GUARD. Re-enable when a real F30x port exists.
+# CONFIG_ARM_MPU is not set
+# CONFIG_HW_STACK_PROTECTION is not set
+
+CONFIG_CONSOLE=y
+CONFIG_UART_CONSOLE=y
+CONFIG_SERIAL=y
+
+CONFIG_GPIO=y
+
+# Board has 8 MHz HSE; F403 HAL firmware default is 25 MHz
+CONFIG_GD32_HXTAL_8MHZ=y
